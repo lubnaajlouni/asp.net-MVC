@@ -1,0 +1,51 @@
+﻿@model IEnumerable<task2mvc.Models.product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitsInStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Catergory.CatergoryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitsInStock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Catergory.CatergoryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }, new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("Details", "Details", new { id = item.ProductID },new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductID },new { @class = "btn btn-primary btn-sm" })
+            </td>
+    </tr>
+}
+
+</table>

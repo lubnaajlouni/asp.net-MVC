@@ -1,0 +1,23 @@
+﻿    @{
+        ViewBag.Title = "show";
+    }
+
+    <h2>show</h2>
+
+    <table class="table  table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Major</th>
+            <th>Faculty</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.Major</td>
+                <td>@item.Faculty</td>
+            </tr>
+        }
+            </table>
