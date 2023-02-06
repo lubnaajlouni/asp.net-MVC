@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mvcModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Catergories">
+    <Key>
+      <PropertyRef Name="CatergoryID" />
+    </Key>
+    <Property Name="CatergoryID" Type="int" Nullable="false" />
+    <Property Name="CatergoryName" Type="varchar" MaxLength="200" />
+    <Property Name="Desicription" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="orderID" />
+    </Key>
+    <Property Name="orderID" Type="int" Nullable="false" />
+    <Property Name="customerID" Type="int" />
+    <Property Name="orderDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="200" />
+    <Property Name="CategoryID" Type="int" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="UnitsInStock" Type="int" />
+  </EntityType>
+  <EntityType Name="TaskEmployees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Last Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Job Title" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gender" Type="bit" />
+    <Property Name="image" Type="varbinary(max)" />
+    <Property Name="cv" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Orders_TaskEmployees">
+    <End Role="TaskEmployees" Type="Self.TaskEmployees" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskEmployees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="customerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_products_Catergories">
+    <End Role="Catergories" Type="Self.Catergories" Multiplicity="0..1" />
+    <End Role="products" Type="Self.products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Catergories">
+        <PropertyRef Name="CatergoryID" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mvcModel1StoreContainer">
+    <EntitySet Name="Catergories" EntityType="Self.Catergories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaskEmployees" EntityType="Self.TaskEmployees" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Orders_TaskEmployees" Association="Self.FK_Orders_TaskEmployees">
+      <End Role="TaskEmployees" EntitySet="TaskEmployees" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_products_Catergories" Association="Self.FK_products_Catergories">
+      <End Role="Catergories" EntitySet="Catergories" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
