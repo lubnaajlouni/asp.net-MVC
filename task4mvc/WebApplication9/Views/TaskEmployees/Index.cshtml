@@ -1,0 +1,103 @@
+﻿@model IEnumerable<WebApplication9.Models.TaskEmployee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @using (Html.BeginForm("Index", "TaskEmployees", FormMethod.Get))
+    {
+        <b> Search By : </b> @Html.RadioButton("SearchBy", "FirstName", true) <text> First Name </text>
+        @Html.RadioButton("SearchBy", "LastName", true) <text> Last Name </text>
+        @Html.RadioButton("SearchBy", "Email", true) <text> Email </text>
+        @Html.RadioButton("SearchBy", "Gender") <text> Gender </text> <br />
+        @Html.TextBox("Search")<input type="submit" value="Search" /><br /><br />}
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Last_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Job_Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CV)
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Last_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Job_Title)
+            </td>
+            <td>
+                @if (item.Gender == true)
+                {
+                    <span>Male</span>
+                }
+                else
+                {
+                    <span>Female</span>
+                }
+            </td>
+            <td>
+                <img src="~/image/@item.image" alt="@item.image" width="100" />
+
+
+            </td>
+            <td>
+                <a href='download' download="@item.CV">
+                    @Html.DisplayFor(model => item.CV, new { htmlAttributes = new { @class = "form-control" } })
+                </a>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
