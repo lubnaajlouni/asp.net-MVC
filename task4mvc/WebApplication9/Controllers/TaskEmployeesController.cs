@@ -129,6 +129,8 @@ namespace WebApplication9.Controllers
 
         }
 
+
+
         // GET: TaskEmployees/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -149,17 +151,45 @@ namespace WebApplication9.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,First_Name,Last_Name,Email,Phone,Age,Job_Title,Gender,image,CV")] TaskEmployee taskEmployee, HttpPostedFileBase image, HttpPostedFileBase cv)
+        public ActionResult Edit([Bind(Include = "Id,First_Name,Last_Name,Email,Phone,Age,Job_Title,Gender,image,CV")] TaskEmployee taskEmployee, HttpPostedFileBase image, HttpPostedFileBase cv,int? id)
         {
-
             if (ModelState.IsValid)
+
             {
+                var odi = db.TaskEmployees.AsNoTracking().FirstOrDefault(x => x.Id == id);
+                if (image != null)
+
+                {
+                    string ima = Path.GetFileName(image.FileName);
+                    string ima1 = Path.Combine(Server.MapPath("~/image"), ima);
+
+                    image.SaveAs(ima1);
+                    taskEmployee.image = ima;
+                }
+                else
+                {
+                    taskEmployee.image = odi.image;
+                }
+
+                if (cv != null)
+
+                {
+                    string ima = Path.GetFileName(cv.FileName);
+                    string ima1 = Path.Combine(Server.MapPath("~/cv"), ima);
+                    cv.SaveAs(ima1);
+                    taskEmployee.CV = ima;
+                }
+                else
+                {
+                    taskEmployee.CV = odi.CV;
+                }
                 db.Entry(taskEmployee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(taskEmployee);
         }
+    
 
         // GET: TaskEmployees/Delete/5
         public ActionResult Delete(int? id)
